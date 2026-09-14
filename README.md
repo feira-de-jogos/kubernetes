@@ -15,7 +15,4 @@ Escolhido o Kubernetes para rodar as aplicações do _backend_.
 1. [Armazenamento](08-armazenamento.md)
 1. [Controle remoto](09-controle-remoto.md)
 1. [Testes](10-testes.md)
-
-## Serviços
-
-1. [MQTT](mqtt)
+1. [Serviços](srv)
