@@ -29,7 +29,7 @@ spec:
   selector:
     app: frontend
   ports:
-    - port: 8080
+    - port: 80
       targetPort: 8080
 ---
 apiVersion: gateway.networking.k8s.io/v1
@@ -40,7 +40,7 @@ metadata:
 spec:
   parentRefs:
     - name: gateway-feira-de-jogos
-      sectionName: https-frontend
+      sectionName: https-feira-de-jogos
   hostnames:
     - "feira-de-jogos.dev.br"
   rules:
@@ -50,4 +50,4 @@ spec:
         value: /
     backendRefs:
     - name: service-frontend
-      port: 8080
+      port: 80

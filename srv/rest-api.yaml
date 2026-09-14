@@ -99,7 +99,7 @@ metadata:
 spec:
   parentRefs:
     - name: gateway-feira-de-jogos
-      sectionName: https-rest-api
+      sectionName: https-feira-de-jogos
   hostnames:
     - "feira-de-jogos.dev.br"
   rules:
