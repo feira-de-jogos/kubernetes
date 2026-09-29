@@ -1,0 +1,42 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: debian
+  namespace: feira-de-jogos
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn-fast
+  resources:
+    requests:
+      storage: 30Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: debian
+  namespace: feira-de-jogos
+  labels:
+    app: debian
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: debian
+  template:
+    metadata:
+      labels:
+        app: debian
+    spec:
+      containers:
+      - name: debian
+        image: debian
+        command: ["sleep", "infinity"]
+        volumeMounts:
+        - mountPath: /data
+          name: storage-volume
+      volumes:
+      - name: storage-volume
+        persistentVolumeClaim:
+          claimName: debian
