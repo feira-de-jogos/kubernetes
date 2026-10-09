@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: park-riddle
+  namespace: feira-de-jogos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: park-riddle
+  template:
+    metadata:
+      labels:
+        app: park-riddle
+    spec:
+      containers:
+        - name: park-riddle
+          image: ghcr.io/feira-de-jogos/park-riddle:latest
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: park-riddle
+  namespace: feira-de-jogos
+spec:
+  selector:
+    app: park-riddle
+  ports:
+    - port: 3000
+      targetPort: 3000
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: park-riddle
+  namespace: feira-de-jogos
+spec:
+  parentRefs:
+    - name: gateway-feira-de-jogos
+      sectionName: https-park-riddle
+  hostnames:
+    - "park-riddle.feira-de-jogos.dev.br"
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: park-riddle
+      port: 3000
