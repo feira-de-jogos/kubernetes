@@ -33,6 +33,9 @@ spec:
               - name: gateway-feira-de-jogos
                 sectionName: https-park-riddle
                 namespace: feira-de-jogos
+              - name: gateway-feira-de-jogos
+                sectionName: https-ouroboros
+                namespace: feira-de-jogos
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -102,6 +105,17 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: certificate-park-riddle
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: https-ouroboros
+      protocol: HTTPS
+      port: 443
+      hostname: "ouroboros.feira-de-jogos.dev.br"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: certificate-ouroboros
       allowedRoutes:
         namespaces:
           from: Same
