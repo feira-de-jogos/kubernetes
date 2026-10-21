@@ -17,6 +17,7 @@ spec:
       containers:
         - name: park-riddle
           image: ghcr.io/feira-de-jogos/park-riddle:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
 ---

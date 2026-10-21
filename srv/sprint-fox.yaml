@@ -17,6 +17,7 @@ spec:
       containers:
         - name: sprint-fox
           image: ghcr.io/feira-de-jogos/sprint-fox:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
 ---

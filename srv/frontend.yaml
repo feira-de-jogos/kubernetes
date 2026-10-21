@@ -17,6 +17,7 @@ spec:
       containers:
         - name: frontend
           image: ghcr.io/feira-de-jogos/feira-de-jogos/frontend:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
 ---

@@ -17,6 +17,7 @@ spec:
       containers:
         - name: ouroboros
           image: ghcr.io/feira-de-jogos/ouroboros:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
 ---
