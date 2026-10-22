@@ -39,6 +39,9 @@ spec:
               - name: gateway-feira-de-jogos
                 sectionName: https-expelled
                 namespace: feira-de-jogos
+              - name: gateway-feira-de-jogos
+                sectionName: https-markupp
+                namespace: feira-de-jogos
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -130,6 +133,17 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: certificate-expelled
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: https-markupp
+      protocol: HTTPS
+      port: 443
+      hostname: "markupp.k8s.sj.ifsc.edu.br"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: certificate-markupp
       allowedRoutes:
         namespaces:
           from: Same
