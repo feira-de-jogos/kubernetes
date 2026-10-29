@@ -40,7 +40,10 @@ spec:
                 sectionName: https-expelled
                 namespace: feira-de-jogos
               - name: gateway-feira-de-jogos
-                sectionName: https-markupp
+                sectionName: https-snct
+                namespace: feira-de-jogos
+              - name: gateway-feira-de-jogos
+                sectionName: https-cyber-moon
                 namespace: feira-de-jogos
 ---
 apiVersion: gateway.networking.k8s.io/v1
@@ -136,14 +139,25 @@ spec:
       allowedRoutes:
         namespaces:
           from: Same
-    - name: https-markupp
+    - name: https-snct
       protocol: HTTPS
       port: 443
-      hostname: "markupp.k8s.sj.ifsc.edu.br"
+      hostname: "snct.feira-de-jogos.dev.br"
       tls:
         mode: Terminate
         certificateRefs:
-          - name: certificate-markupp
+          - name: certificate-snct
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: https-cyber-moon
+      protocol: HTTPS
+      port: 443
+      hostname: "cyber-moon.feira-de-jogos.dev.br"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: certificate-cyber-moon
       allowedRoutes:
         namespaces:
           from: Same
