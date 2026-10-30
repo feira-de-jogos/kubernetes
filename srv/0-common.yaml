@@ -45,6 +45,9 @@ spec:
               - name: gateway-feira-de-jogos
                 sectionName: https-cyber-moon
                 namespace: feira-de-jogos
+              - name: gateway-feira-de-jogos
+                sectionName: https-heatcore
+                namespace: feira-de-jogos
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -158,6 +161,17 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: certificate-cyber-moon
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: https-heatcore
+      protocol: HTTPS
+      port: 443
+      hostname: "heatcore.feira-de-jogos.dev.br"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: certificate-heatcore
       allowedRoutes:
         namespaces:
           from: Same
