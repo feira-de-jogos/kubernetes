@@ -6,6 +6,7 @@ metadata:
   namespace: feira-de-jogos
 data:
   acl.conf: |
+    topic readwrite tron/#
     user admin
     topic readwrite #
     user unity
@@ -26,7 +27,7 @@ data:
     protocol websockets
     acl_file /mosquitto/config/acl.conf
     password_file /mosquitto/config/passwd
-    allow_anonymous false
+    allow_anonymous true
 ---
 apiVersion: apps/v1
 kind: Deployment
