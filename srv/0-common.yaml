@@ -48,6 +48,15 @@ spec:
               - name: gateway-feira-de-jogos
                 sectionName: https-heatcore
                 namespace: feira-de-jogos
+              - name: gateway-feira-de-jogos
+                sectionName: https-markupp
+                namespace: feira-de-jogos
+              - name: gateway-feira-de-jogos
+                sectionName: https-markupp-api
+                namespace: feira-de-jogos
+              - name: gateway-feira-de-jogos
+                sectionName: https-markupp-site
+                namespace: feira-de-jogos
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -175,6 +184,48 @@ spec:
       allowedRoutes:
         namespaces:
           from: Same
+    - name: https-markupp
+      protocol: HTTPS
+      port: 443
+      hostname: "markupp.k8s.sj.ifsc.edu.br"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: certificate-markupp
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: markupp
+    - name: https-markupp-api
+      protocol: HTTPS
+      port: 443
+      hostname: "api.markupp.k8s.sj.ifsc.edu.br"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: certificate-markupp-api
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: markupp
+    - name: https-markupp-site
+      protocol: HTTPS
+      port: 443
+      hostname: "site.markupp.k8s.sj.ifsc.edu.br"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: certificate-markupp-site
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: markupp
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
