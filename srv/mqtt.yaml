@@ -7,6 +7,8 @@ metadata:
 data:
   acl.conf: |
     topic readwrite tron/#
+    topic readwrite nullborns-night-city/#
+    topic readwrite nullborns/#
     user admin
     topic readwrite #
     user unity
