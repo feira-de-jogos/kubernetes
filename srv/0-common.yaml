@@ -49,6 +49,9 @@ spec:
                 sectionName: https-heatcore
                 namespace: feira-de-jogos
               - name: gateway-feira-de-jogos
+                sectionName: https-tron
+                namespace: feira-de-jogos
+              - name: gateway-feira-de-jogos
                 sectionName: https-markupp
                 namespace: feira-de-jogos
               - name: gateway-feira-de-jogos
@@ -181,6 +184,17 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: certificate-heatcore
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: https-tron
+      protocol: HTTPS
+      port: 443
+      hostname: "tron.feira-de-jogos.dev.br"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: certificate-tron
       allowedRoutes:
         namespaces:
           from: Same
