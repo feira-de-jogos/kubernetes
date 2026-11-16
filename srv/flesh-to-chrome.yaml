@@ -1,0 +1,111 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flesh-to-chrome
+  namespace: feira-de-jogos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flesh-to-chrome
+  template:
+    metadata:
+      labels:
+        app: flesh-to-chrome
+    spec:
+      containers:
+        - name: flesh-to-chrome
+          image: ghcr.io/feira-de-jogos/flesh-to-chrome:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flesh-to-chrome-server
+  namespace: feira-de-jogos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flesh-to-chrome-server
+  template:
+    metadata:
+      labels:
+        app: flesh-to-chrome-server
+    spec:
+      containers:
+        - name: flesh-to-chrome-server
+          image: ghcr.io/feira-de-jogos/flesh-to-chrome/server:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flesh-to-chrome
+  namespace: feira-de-jogos
+spec:
+  selector:
+    app: flesh-to-chrome
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flesh-to-chrome-server
+  namespace: feira-de-jogos
+spec:
+  selector:
+    app: flesh-to-chrome-server
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: flesh-to-chrome
+  namespace: feira-de-jogos
+spec:
+  parentRefs:
+    - name: gateway-feira-de-jogos
+      sectionName: https-flesh-to-chrome
+  hostnames:
+    - "flesh-to-chrome.feira-de-jogos.dev.br"
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: flesh-to-chrome
+      port: 8080
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: flesh-to-chrome-server
+  namespace: feira-de-jogos
+spec:
+  parentRefs:
+    - name: gateway-feira-de-jogos
+      sectionName: https-flesh-to-chrome
+  hostnames:
+    - "flesh-to-chrome.feira-de-jogos.dev.br"
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /ws
+    - path:
+        type: PathPrefix
+        value: /ice-config
+    backendRefs:
+    - name: flesh-to-chrome-server
+      port: 8080

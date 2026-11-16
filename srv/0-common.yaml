@@ -52,6 +52,9 @@ spec:
                 sectionName: https-tron
                 namespace: feira-de-jogos
               - name: gateway-feira-de-jogos
+                sectionName: https-flesh-to-chrome
+                namespace: feira-de-jogos
+              - name: gateway-feira-de-jogos
                 sectionName: https-markupp
                 namespace: feira-de-jogos
               - name: gateway-feira-de-jogos
@@ -195,6 +198,17 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: certificate-tron
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: https-flesh-to-chrome
+      protocol: HTTPS
+      port: 443
+      hostname: "flesh-to-chrome.feira-de-jogos.dev.br"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: certificate-flesh-to-chrome
       allowedRoutes:
         namespaces:
           from: Same
