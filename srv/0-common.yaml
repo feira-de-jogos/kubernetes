@@ -58,6 +58,9 @@ spec:
                 sectionName: https-apex-grappler
                 namespace: feira-de-jogos
               - name: gateway-feira-de-jogos
+                sectionName: https-shobu
+                namespace: feira-de-jogos
+              - name: gateway-feira-de-jogos
                 sectionName: https-markupp
                 namespace: feira-de-jogos
               - name: gateway-feira-de-jogos
@@ -223,6 +226,17 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: certificate-apex-grappler
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: https-shobu
+      protocol: HTTPS
+      port: 443
+      hostname: "shobu.feira-de-jogos.dev.br"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: certificate-shobu
       allowedRoutes:
         namespaces:
           from: Same

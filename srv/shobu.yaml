@@ -1,0 +1,63 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shobu
+  namespace: feira-de-jogos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shobu
+  template:
+    metadata:
+      labels:
+        app: shobu
+    spec:
+      containers:
+        - name: shobu
+          image: ghcr.io/feira-de-jogos/shobu:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 2567
+          envFrom:
+            - secretRef:
+                name: shobu
+                optional: true
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 2567
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shobu
+  namespace: feira-de-jogos
+spec:
+  selector:
+    app: shobu
+  ports:
+    - port: 2567
+      targetPort: 2567
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: shobu
+  namespace: feira-de-jogos
+spec:
+  parentRefs:
+    - name: gateway-feira-de-jogos
+      sectionName: https-shobu
+  hostnames:
+    - "shobu.feira-de-jogos.dev.br"
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: shobu
+      port: 2567
+
