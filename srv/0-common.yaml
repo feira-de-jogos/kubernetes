@@ -55,6 +55,9 @@ spec:
                 sectionName: https-flesh-to-chrome
                 namespace: feira-de-jogos
               - name: gateway-feira-de-jogos
+                sectionName: https-apex-grappler
+                namespace: feira-de-jogos
+              - name: gateway-feira-de-jogos
                 sectionName: https-markupp
                 namespace: feira-de-jogos
               - name: gateway-feira-de-jogos
@@ -209,6 +212,17 @@ spec:
         mode: Terminate
         certificateRefs:
           - name: certificate-flesh-to-chrome
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: https-apex-grappler
+      protocol: HTTPS
+      port: 443
+      hostname: "apex-grappler.feira-de-jogos.dev.br"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: certificate-apex-grappler
       allowedRoutes:
         namespaces:
           from: Same

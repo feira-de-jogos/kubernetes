@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apex-grappler
+  namespace: feira-de-jogos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apex-grappler
+  template:
+    metadata:
+      labels:
+        app: apex-grappler
+    spec:
+      containers:
+        - name: apex-grappler
+          image: ghcr.io/feira-de-jogos/apex-grappler:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apex-grappler
+  namespace: feira-de-jogos
+spec:
+  selector:
+    app: apex-grappler
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: apex-grappler
+  namespace: feira-de-jogos
+spec:
+  parentRefs:
+    - name: gateway-feira-de-jogos
+      sectionName: https-apex-grappler
+  hostnames:
+    - "apex-grappler.feira-de-jogos.dev.br"
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: apex-grappler
+      port: 80
