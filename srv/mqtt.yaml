@@ -6,6 +6,7 @@ metadata:
   namespace: feira-de-jogos
 data:
   acl.conf: |
+    topic readwrite vending/#
     topic readwrite tron/#
     topic readwrite nullborns-night-city/#
     topic readwrite nullborns/#
